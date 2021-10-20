@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9&&wj(+so_s0uy%57^63k)19^j^&1p1@!9$486z$+95!(mia%6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 MODE=config("MODE", default="dev")
@@ -56,6 +55,14 @@ DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+# Email configurations remember to install python-decouple
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 
 # Application definition
 
@@ -66,10 +73,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_registration',
     'news.apps.NewsConfig',
-    'bootstrap4',
-    
-    
+    'bootstrap3',
+    'tinymce',
+    'rest_framework',
+    'rest_framework.authtoken'
+
 ]
 
 MIDDLEWARE = [
@@ -102,6 +112,13 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+
 WSGI_APPLICATION = 'tribune.wsgi.application'
 
 
@@ -111,7 +128,7 @@ WSGI_APPLICATION = 'tribune.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tribune2',
+        'NAME': 'tribunes',
         'USER': 'developer',
         'PASSWORD':'developerwilson'
     }

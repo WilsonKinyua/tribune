@@ -1,4 +1,4 @@
-{% load bootstrap4 %}
+{% load bootstrap3 %}
 {% load static%}
 <!DOCTYPE html>
 <html>
@@ -25,6 +25,7 @@
     {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
      {% bootstrap_javascript %}
+     <script type="text/javascript" src="{% static 'js/newsletter.js'%}"></script>
     {% endblock %}
 </body>
 </html>
